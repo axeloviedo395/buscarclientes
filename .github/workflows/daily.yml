@@ -1,0 +1,29 @@
+name: Búsqueda diaria de negocios
+
+on:
+  schedule:
+    # Corre todos los días a las 09:00 hora Argentina (12:00 UTC)
+    - cron: "0 12 * * *"
+  workflow_dispatch: {}   # también te deja apretar "Run workflow" a mano cuando quieras
+
+jobs:
+  buscar-negocios:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: pip install -r modulo1/requirements.txt
+
+      - name: Ejecutar búsqueda
+        env:
+          GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python modulo1/discovery.py
