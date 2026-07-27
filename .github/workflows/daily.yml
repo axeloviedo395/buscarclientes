@@ -19,11 +19,11 @@ jobs:
           python-version: "3.11"
 
       - name: Instalar dependencias
-        run: pip install -r modulo1/requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Ejecutar búsqueda
         env:
           GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-        run: python modulo1/discovery.py
+        run: python discovery.py
