@@ -2,8 +2,9 @@ name: Búsqueda diaria de negocios
 
 on:
   schedule:
+    # Corre todos los días a las 09:00 hora Argentina (12:00 UTC)
     - cron: "0 12 * * *"
-  workflow_dispatch: {}
+  workflow_dispatch: {}   # también te deja apretar "Run workflow" a mano cuando quieras
 
 jobs:
   buscar-negocios:
@@ -32,3 +33,9 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: python enrichment.py
+
+      - name: Calcular puntaje y prioridad
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python scoring.py
